@@ -1,0 +1,17 @@
+[package]
+name = "core"
+typ = "staticlib"
+src = ["src/string/", "src/io/", "src/containers/", "src/memory"]
+gen_config = true
+
+[lib]
+header = ["include/"]
+
+[compiler]
+includes = ["include/"]
+flags = ["-DDLL_BUILD", "-ggdb", "-fPIC"]
+
+[linker]
+#flags = ["-fsanitize=memory"]
+
+[dependencies]

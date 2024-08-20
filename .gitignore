@@ -1,2 +1,2 @@
-./bin/
-./compile_commands.json
+bin
+compile_commands.json

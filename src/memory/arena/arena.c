@@ -1,4 +1,4 @@
-#include "../internal.h"
+#include "../../internal.h"
 
 ArenaAllocator arena_new(size_t size) {
      ArenaAllocator self = {

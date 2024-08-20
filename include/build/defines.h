@@ -1,6 +1,12 @@
 #ifndef _CORE_DEFINES_H_
 #define _CORE_DEFINES_H_
 
+#ifdef  _WIN32
+    #define  PLATFORM_WIN32
+#else
+    #define PLATFORM_POSIX
+#endif
+
 #ifndef STRING_GROW_FACTOR
 #define STRING_GROW_FACTOR 1.5
 #endif

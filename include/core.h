@@ -17,8 +17,12 @@ extern "C" {
 #include "io/file.h"
 #include "io/print.h"
 
-#include "memory/arena.h"
+#include "memory/arena/arena.h"
+#include "memory/arena/string.h"
+#include "memory/arena/vector.h"
 #include "memory/alloc.h"
+
+#include "thread/thread.h"
 
 #ifdef __cplusplus
 }

@@ -1,8 +1,8 @@
 #ifndef _CORE_ARENA_H_
 #define _CORE_ARENA_H_
 
-#include "../build/build.h"
-#include "../containers/vector.h"
+#include "../../build/build.h"
+#include "../../containers/vector.h"
 
 #include <stddef.h>
 

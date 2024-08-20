@@ -1,17 +1,13 @@
-[package]
-name = "core"
-typ = "staticlib"
-src = ["src/string/", "src/io/", "src/containers/", "src/memory"]
-gen_config = true
+[Package]
+name = 'core'
+version = "0.1.0"
 
-[lib]
-header = ["include/"]
-
-[compiler]
-includes = ["include/"]
-flags = ["-DDLL_BUILD", "-ggdb", "-fPIC"]
-
-[linker]
-#flags = ["-fsanitize=memory"]
-
-[dependencies]
+[[Bin]]
+type = 'StaticLib'
+name = 'core'
+src = ['./src/io/', './src/memory/', './src/string/', './src/containers/', 'src/thread']
+lang = 'C11'
+opt_level = 'O3'
+includes = ['./include/']
+out_dir = 'bin'
+default_libs = false

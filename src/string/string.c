@@ -159,7 +159,7 @@ CORE_API void string_push(String *self, char c) {
     }
     self->data.l.ptr[self->data.l.len - 1] = c;
     self->data.l.ptr[self->data.l.len++] = '\0';
-    string_dump(self);
+    //string_dump(self);
 }
 
 CORE_API void string_push_str(String *self, String other) {

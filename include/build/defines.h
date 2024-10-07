@@ -17,11 +17,15 @@
 #define CORE_ASSERT(e)
 #endif
 
+#include <stdlib.h>
+
 #define CORE_BIT(x) 1 << (x)
 
 #define CORE_CONCAT(a, b) a##b
 #define CORE_MACRO_VAR(var) CORE_CONCAT(var, __LINE__)
 #define core_defer(begin, end) \
     for(size_t CORE_MACRO_VAR(i) = (begin, 0); !CORE_MACRO_VAR(i); (CORE_MACRO_VAR(i)++), end)
+
+typedef wchar_t wchar;
 
 #endif // _CORE_DEFINES_H_

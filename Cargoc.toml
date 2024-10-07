@@ -3,11 +3,16 @@ name = 'core'
 version = "0.1.0"
 
 [[Bin]]
+linker = "clang"
+compiler = "clang"
 type = 'StaticLib'
 name = 'core'
-src = ['./src/io/', './src/memory/', './src/string/', './src/containers/', 'src/thread']
+src = ['./src/io/', './src/memory/', './src/string/', './src/containers/', 'src/thread', 'src/gfx/']
 lang = 'C11'
 opt_level = 'O3'
 includes = ['./include/']
 out_dir = 'bin'
 default_libs = false
+flags = ["/DEFAULTLIB:user32", "/DEFAULTLIB:opengl32"]
+
+[Dependencies]

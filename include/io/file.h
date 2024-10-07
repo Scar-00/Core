@@ -23,7 +23,7 @@ CORE_API void file_close(FileHandle self);
 CORE_API void *file_raw(FileHandle self);
 CORE_API String file_read(FileHandle self);
 CORE_API bool file_write_raw(FileHandle self, const char *data, size_t len);
-CORE_API bool file_write(FileHandle self, const String *data);
+CORE_API bool file_write(FileHandle self, const StringView data);
 CORE_API bool file_exists(const StringView path);
 
 CORE_API String file_read_to_string(const char *path);

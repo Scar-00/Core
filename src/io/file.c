@@ -75,8 +75,8 @@ CORE_API bool file_write_raw(FileHandle self, const char *data, size_t len) {
     return ferror(self->fd) != 0;
 }
 
-CORE_API bool file_write(FileHandle self, const String *data) {
-    return file_write_raw(self, string_cstr(data), string_len(data));
+CORE_API bool file_write(FileHandle self, const StringView data) {
+    return file_write_raw(self, data.data, data.len);
 }
 
 CORE_API bool file_exists(const StringView path) {
@@ -101,7 +101,7 @@ CORE_API String file_read_to_string(const char *path) {
     return content;
 }
 
-static bool std_file_handles_init;
+static bool std_file_handles_init = false;
 static File out = {0};
 static File err = {0};
 static File in = {0};
@@ -122,6 +122,7 @@ static void init_file_handles() {
         .mode = FILE_READ,
         .path = string_from("STDIN"),
     };
+    std_file_handles_init = true;
 }
 
 CORE_API FileHandle stdio_get(void) {

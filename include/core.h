@@ -12,6 +12,7 @@ extern "C" {
 #include "containers/array_view.h"
 
 #include "string/string.h"
+#include "string/wstring.h"
 #include "string/string_view.h"
 
 #include "io/file.h"
@@ -23,6 +24,10 @@ extern "C" {
 #include "memory/alloc.h"
 
 #include "thread/thread.h"
+
+#ifdef CORE_GFX
+#include "gfx/gfx.h"
+#endif
 
 #ifdef __cplusplus
 }

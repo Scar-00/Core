@@ -1,12 +1,19 @@
 #include "../../internal.h"
 
-ArenaAllocator arena_new(size_t size) {
+CORE_API ArenaAllocator arena_new(size_t size) {
      ArenaAllocator self = {
         .buffer = vec_with_size(char, size),
         .current_alloc = self.buffer,
         .next = NULL,
     };
     return self;
+}
+
+CORE_API void arena_dealloc(ArenaAllocator *self) {
+    if(self->next) {
+        arena_dealloc(self->next);
+    }
+    vec_destroy(self->buffer);
 }
 
 static void arena_clear_int(ArenaAllocator self) {

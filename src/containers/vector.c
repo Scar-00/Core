@@ -49,3 +49,16 @@ CORE_API void *core_vec_create_empty_internal(void) {
     arr++;
     return arr;
 }
+
+CORE_API void *core_vec_copy(void *arr, size_t elem_size) {
+    ArrayHeader *other = arr;
+    size_t other_cap = other[-1].cap;
+    ArrayHeader *new = core_vec_create_internal(other_cap, elem_size);
+    new[-1].len = other[-1].len;
+    memcpy((void*)new, arr, new[-1].len * elem_size);
+    return new;
+}
+
+
+
+

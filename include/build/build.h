@@ -9,4 +9,6 @@
     #define CORE_API
 #endif
 
+#include <stdbool.h>
+
 #endif // _CORE_BUILD_H_

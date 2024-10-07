@@ -2,6 +2,7 @@
 #define _CORE_STRING_H_
 
 #include "../build/build.h"
+#include "../build/defines.h"
 
 #include <stddef.h>
 #include <stdarg.h>
@@ -41,6 +42,9 @@ CORE_API void string_push(String *self, char c);
 CORE_API void string_push_str(String *self, String other);
 CORE_API void string_push_ptr(String *self, const char *ptr);
 CORE_API void string_pop(String *self);
+CORE_API bool string_cmp(String const *self, String const *other);
+CORE_API bool string_cmp_sv(String const *self, StringView other);
+CORE_API bool string_contains(String *self, StringView predicate);
 
 CORE_API void string_dump(String const *self);
 

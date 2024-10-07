@@ -2,6 +2,7 @@
 #define _CORE_INTERNAL_H_
 
 #include <core.h>
+#include <gfx/gfx.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -10,6 +11,12 @@
 #include <stdbool.h>
 
 #define SHORT_STRING_LENGTH 24
+//  the caller needs to garuentee that both pointers are valid and cannot go oob
+bool partial_cmp_ptr(const char *self, const char *predicate, size_t len);
+bool wpartial_cmp_ptr(const wchar *self, const wchar *predicate, size_t len);
+const WString utf8_from_ascii(StringView self);
+size_t wstrlen(const wchar *ptr);
+
 
 #define ARENA_DEFAULT_ALLOC_SIZE 1024 * 4
 

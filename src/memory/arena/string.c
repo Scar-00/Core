@@ -31,7 +31,7 @@ CORE_API AString astring_from(ArenaAllocator arena, const char *ptr) {
     CORE_ASSERT(ptr && "error: cannot pass nullptr to `astring_from`");
     size_t size = strlen(ptr);
     AString self = astring_new_size(arena, size);
-    strcpy_s(self.ptr, size, ptr);
+    strcpy_s(self.ptr, size + 1, ptr);
     self.len = size;
     return self;
 }
@@ -63,6 +63,10 @@ CORE_API AString astring_vformat(ArenaAllocator arena, const char *fmt, va_list 
     vsnprintf(self.ptr, size + 1, fmt, args_copy);
     self.len = size;
     return self;
+}
+
+CORE_API AString astring_from_string(ArenaAllocator arena, String const *string) {
+    return astring_from_parts(arena, string_cstr(string), string_len(string), string_cap(string));
 }
 
 CORE_API const char *astring_cstr(AString const *self) {
@@ -102,10 +106,61 @@ CORE_API void astring_pop(AString *self) {
     self->ptr[(--self->len) - 1] = '\0';
 }
 
+CORE_API bool astring_cmp(AString const *self, AString const *other) {
+    size_t self_len = astring_len(self);
+    if(self_len != astring_len(other)) {
+        return false;
+    }
+
+    const char *self_ptr = astring_cstr(self);
+    const char *other_ptr = astring_cstr(other);
+    for(size_t i = 0; i < self_len; i++) {
+        if(self_ptr[i] != other_ptr[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+CORE_API bool astring_contains(AString const *self, AString const *predicate) {
+    if(astring_len(predicate) == 0) {
+        return false;
+    }
+
+    const char *self_ptr = astring_cstr(self);
+    const char *predicate_ptr = astring_cstr(predicate);
+    for(size_t i = 0; i < astring_len(self); i++) {
+        if(partial_cmp_ptr(&self_ptr[i], predicate_ptr, astring_len(predicate))) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+CORE_API bool astring_contains_sv(AString const *self, StringView predicate) {
+    if(predicate.len == 0) {
+        return false;
+    }
+
+    const char *self_ptr = astring_cstr(self);
+    for(size_t i = 0; i < astring_len(self); i++) {
+        if(partial_cmp_ptr(&self_ptr[i], predicate.data, predicate.len)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 CORE_API void astring_dump(AString const *self) {
-    fprintf(stdout, "AString { ptr: \"%s\", len: %zu, cap: %zu }", self->ptr, self->len, self->cap);
+    fprintf(stdout, "AString { ptr: \"%s\", len: %zu, cap: %zu }\n", self->ptr, self->len, self->cap);
 }
 
 CORE_API AString astring_copy(AString const *self) {
-    return astring_from_parts(self->arena, astring_cstr(self), astring_len(self), astring_cap(self));
+       return astring_from_parts(self->arena, astring_cstr(self), astring_len(self), astring_cap(self));
+}
+
+CORE_API String astring_to_string(AString const *self) {
+    return string_from_parts(self->ptr, self->len, self->cap);
 }

@@ -15,6 +15,7 @@ CORE_API void *core_vec_create_internal(size_t capacity, size_t elem_size);
 CORE_API void *core_vec_maygrow_internal(void *arr, size_t elem_size);
 CORE_API void core_vec_destroy_internal(void *arr);
 CORE_API void *core_vec_create_empty_internal(void);
+CORE_API void *core_vec_copy(void *arr, size_t elem_size);
 
 #define vec_header(v) ((struct ArrayHeader *)(v) - 1)
 #define vec_len(v) (vec_header((v))->len)
@@ -36,6 +37,7 @@ CORE_API void *core_vec_create_empty_internal(void);
         (arr)[(index)] = (value);\
 }
 
+#define vec_copy(arr) core_vec_copy((arr), sizeof((*arr)))
 #define vec_at(arr, index) (arr)[(index)]
 #define vec_iter(arr, iter) for(size_t (iter) = 0; (iter) < vec_len((arr)); (iter)++)
 #define vec_foreach(arr, item) for(__typeof__(*(arr)) *item = (arr); item != (arr) + vec_len((arr)); item++)

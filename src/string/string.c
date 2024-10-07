@@ -2,6 +2,16 @@
 #include <string.h>
 #include <stdarg.h>
 
+//  the caller needs to garuentee that both pointers are valid and cannot go oob
+bool partial_cmp_ptr(const char *self, const char *predicate, size_t len) {
+    for(size_t i = 0; i < len; i ++) {
+        if(self[i] != predicate[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
 static char string_cpy_buffer[SHORT_STRING_LENGTH] = {0};
 static void string_transform(String *self) {
     if(self->type == STRING_LONG) {
@@ -188,6 +198,52 @@ CORE_API void string_pop(String *self) {
         }
     }
     //string_dump(self);
+}
+
+CORE_API bool string_cmp(String const *self, String const *other) {
+    size_t self_len = string_len(self);
+    if(self_len != string_len(other)) {
+        return false;
+    }
+
+    const char *self_ptr = string_cstr(self);
+    const char *other_ptr = string_cstr(other);
+    for(size_t i = 0; i < self_len; i++) {
+        if(self_ptr[i] != other_ptr[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+CORE_API bool string_cmp_sv(String const *self, StringView other) {
+    size_t self_len = string_len(self);
+    if(self_len != other.len) {
+        return false;
+    }
+
+    const char *self_ptr = string_cstr(self);
+    for(size_t i = 0; i < self_len; i++) {
+        if(self_ptr[i] != other.data[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+CORE_API bool string_contains(String *self, StringView predicate) {
+    if(predicate.len == 0) {
+        return false;
+    }
+
+    const char *self_ptr = string_cstr(self);
+    for(size_t i = 0; i < string_len(self); i++) {
+        if(partial_cmp_ptr(&self_ptr[i], predicate.data, predicate.len)) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 CORE_API void string_dump(String const *self) {

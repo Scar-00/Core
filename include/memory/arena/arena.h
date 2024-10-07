@@ -14,6 +14,9 @@ struct ArenaAllocator {
     ArenaAllocator *next;
 };
 
+CORE_API ArenaAllocator arena_new(size_t size);
+CORE_API void arena_dealloc(ArenaAllocator *arena);
+
 CORE_API void *arena_alloc(ArenaAllocator alloc, size_t size);
 CORE_API void *arena_realloc(ArenaAllocator alloc, void *src, size_t size);
 CORE_API void arena_clear(ArenaAllocator alloc);
